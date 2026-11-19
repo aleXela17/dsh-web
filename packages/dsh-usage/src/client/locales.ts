@@ -183,8 +183,9 @@ export type UsageKey = keyof typeof zh
  * does (the settings section has no framework locale seat of its own).
  */
 export function dictionary(): Record<UsageKey, string> {
-  const lang = typeof document !== 'undefined' ? document.documentElement.lang : 'zh'
-  return lang.toLowerCase().startsWith('en') ? en : zh
+  // Chinese keeps the Chinese table; every other UI language falls back to English.
+  const lang = (typeof document !== 'undefined' ? document.documentElement.lang : 'zh').toLowerCase()
+  return lang.startsWith('zh') ? zh : en
 }
 
 /** Translate a key with optional `{name}` template params; missing keys degrade to the key. */
